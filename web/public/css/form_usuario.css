@@ -1,0 +1,224 @@
+.main_form_usuario{
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    background-image: url('../res/boxes.png');
+}
+#form_usuario .legend{
+    grid-area: legend;
+}
+#form_usuario .input-nombre{
+    grid-area: nombre;
+}
+#form_usuario .input-paterno{
+    grid-area: paterno;
+}
+#form_usuario .input-materno{
+    grid-area: materno;
+}
+#form_usuario .input-correo{
+    grid-area: correo;
+}
+#form_usuario .input-clave{
+    grid-area: clave;
+}
+#form_usuario .input-clave i.btn-ver{
+    position: absolute;
+    align-self: flex-end;
+    transform:translateY(15px);
+    cursor: pointer;
+    opacity: .5;
+}
+#form_usuario .input-clave i.btn-ver-active{
+    color: midnightblue;
+    transition: opacity 200ms;
+    opacity: 1;
+}
+#form_usuario .input-perfil{
+    grid-area: perfil;
+    text-align: center;
+}
+#form_usuario .input-perfil span{
+    color: #333;
+    font-weight: 500;
+    font-size: large;
+    text-align: start;
+}
+#form_usuario .input-perfil input[type=file]{
+    border: none !important;
+    display: none !important;
+}
+#form_usuario .input-perfil img,#form_usuario .input-perfil label{ 
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+}
+#form_usuario .input-perfil label{
+    transition: opacity 200ms;
+    opacity: .7;
+    position: relative !important;
+}
+#form_usuario .input-perfil label:hover{
+    opacity: .9;
+}
+#form_usuario .input-submit{
+    grid-area: submit;
+}
+#form_usuario .loader{
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    margin: auto;
+    transform: translateY(50%);
+}
+#form_usuario{
+    background-color: #fff;
+    width: auto;
+    height: auto;
+    padding: 2rem;
+    border-radius: .5em;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(6,auto);
+    grid-template-areas: 
+    "legend   legend"
+    "nombre   clave"
+    "paterno  perfil"
+    "materno  perfil"
+    "correo   perfil"
+    "submit   submit" 
+    ;
+    gap: 2rem;
+}
+#form_usuario h1{
+    color: #333;
+    text-align: center;
+    font-family: sans-serif;
+}
+#form_usuario input{
+    border: none;
+    border-bottom: thin solid #333;
+    padding: .7rem;
+    outline: 0;
+    box-shadow: none;
+    color: midnightblue;
+    font-weight: 500;
+    font-size: small;
+}
+
+#form_usuario label{
+    color: #333;
+    font-weight: bold;
+    font-size: large;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 200ms;
+    transform: translateY(15px);
+}
+#form_usuario .labelUp{
+    transform: translateY(-15px);
+}
+#form_usuario .labelDown{
+    transform: translateY(15px);
+}
+#form_usuario input:focus ~ label{
+    transform: translateY(-15px);
+}
+#form_usuario input:invalid{
+    border-bottom-color: #333;
+}
+#form_usuario input:valid{
+    border-bottom-color: green;
+}
+#form_usuario button[type=submit]{
+    border: none;
+    background-color:  #1c2833;
+    color: #fff;
+    font-weight: bold;
+    padding: .9rem;
+    font-size: medium;
+    transition: background-color 500ms;
+    cursor: pointer;
+}
+#form_usuario button[type=submit]:hover{
+    background-color: green;
+}
+#form_usuario .form_group{
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 200px) { 
+    #form_usuario{
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        grid-template-rows: repeat(8,auto);
+        grid-template-areas: 
+        "legend   legend"
+        "nombre   nombre"
+        "paterno  paterno"
+        "materno  materno"
+        "correo   correo"
+        "clave    clave" 
+        "perfil   perfil"
+        "submit   submit"
+        ;
+    } 
+}
+
+@media (min-width: 576px) { 
+    #form_usuario{
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        grid-template-rows: repeat(8,auto);
+        grid-template-areas: 
+        "legend   legend"
+        "nombre   nombre"
+        "paterno  paterno"
+        "materno  materno"
+        "correo   correo"
+        "clave    clave" 
+        "perfil   perfil"
+        "submit   submit"
+        ;
+    } 
+}
+
+@media (min-width: 768px) { 
+    #form_usuario{
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        grid-template-rows: repeat(6,auto);
+        grid-template-areas: 
+        "legend   legend"
+        "nombre   clave"
+        "paterno  perfil"
+        "materno  perfil"
+        "correo   perfil"
+        "submit   submit"
+        ;
+    }     
+}
+
+@media (min-width: 992px) { 
+    
+    #form_usuario{
+        width: auto;
+        height: auto;
+        min-height: 40vh;
+    }
+}
+
+@media (min-width: 1200px){ 
+    #form_usuario{
+        width: 60%;
+        height: auto;
+        min-height: 40vh;
+    } 
+}

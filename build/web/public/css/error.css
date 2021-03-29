@@ -1,0 +1,35 @@
+.container-error{
+    width: 50%;
+    height: auto;
+    padding: 2rem;
+    background-color: #e8e8e8;
+    border-radius: .5em;
+    display: block;
+    margin: auto;
+    text-align: center;
+    margin-top: 12%;
+}
+.container-error img{
+    width: 6rem;
+    height: auto;
+    border-radius: 50%;
+    transition: transform 600ms;
+    animation: shake 600ms linear infinite alternate;
+}
+.container-error h1{
+    color: midnightblue;
+}
+.container-error h1, .container-error p{
+    text-align: justify;
+}
+@keyframes shake{
+    0%{
+        transform: rotate(-45deg);
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(45deg);
+    }
+}
