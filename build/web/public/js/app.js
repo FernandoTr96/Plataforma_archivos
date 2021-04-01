@@ -2,6 +2,8 @@
 import {validarCamposLogin,deshabilitaRetroceso} from './login.js';
 import {validarCamposRegistro,verImagFormRegistro,registrar_usuario,mostrarClaveFomRegistro} from './form_registro.js';
 import {validarCamposRecuperarPwd,enviarCodigo,verificarCodigo,cambiarPwd} from './form_password.js';
+import {btnMenuMovil} from './home.js';
+import {validarCamposPerfil,updatePerfil} from './editar_perfil.js';
 
 //variables que usare mucho
 const d = document;
@@ -13,7 +15,7 @@ d.addEventListener('DOMContentLoaded',e=>{
     validarCamposRegistro();
     validarCamposLogin();
     validarCamposRecuperarPwd();
-
+    validarCamposPerfil();
 });
 
 d.addEventListener('submit',e=>{
@@ -40,18 +42,32 @@ d.addEventListener('submit',e=>{
        e.preventDefault();
        cambiarPwd(e.target);
     }
+    
+    //editar perfil
+    if(e.target.matches('#form_editar_perfil')){
+       e.preventDefault();
+       updatePerfil(e.target);
+    }
 });
 
 d.addEventListener('change',e=>{ 
     //cargar imagen en el formulario de registro
     if(e.target.matches('#form_usuario #input_file_perfil')){
         verImagFormRegistro(e.target,'img_perfil');
-    }    
+    }
+    //cargar imagen en el formulario de perfil
+    if(e.target.matches('#form_editar_perfil #input_file_perfil')){
+        verImagFormRegistro(e.target,'img_perfil');
+    }
 });
 
 d.addEventListener('click',e=>{
     //ver contraseñas en form registro
     if(e.target.matches('#form_usuario .input-clave .btn-ver')){
         mostrarClaveFomRegistro(e.target);
+    }
+    //mostrar menu movil
+    if(e.target.matches(".hamburger")|| e.target.matches(".hamburger *")){
+        btnMenuMovil(".root-container .nav",".hamburger");
     }
 });

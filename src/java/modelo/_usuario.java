@@ -410,4 +410,37 @@ public class _usuario {
 
         return map;
     }
+    
+    public HashMap updatePerfil(){
+        
+        String query = "UPDATE usuarios set correo = ? , clave = ? , img = ?  WHERE id ="+ this.getId();
+        
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setString(1, this.getCorreo());
+            ps.setString(2, this.getClave());
+            ps.setString(3, this.getImg());
+            int afectadas = ps.executeUpdate();
+
+            if (afectadas != 0) {
+                map.put("estado", 200);
+            } else {
+                map.put("estado", 400);
+            }
+
+            conexion.close();
+
+        } catch (SQLException e) {
+
+            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
+            if (e.getErrorCode() == 1062) {
+                map.put("estado", 500);
+            } else {
+                map.put("estado", e.getMessage());
+            }
+        }
+
+        return map;
+    }
 }

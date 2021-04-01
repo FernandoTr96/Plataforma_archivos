@@ -1,12 +1,14 @@
-<%-- 
-    Document   : home
-    Created on : 13/03/2021, 04:42:34 PM
-    Author     : fernando
---%>
-
-<%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@include file="../includes/head.jsp" %>
-<h1>Hello Home!</h1>
+<div class="root-container">
+    <%@include file="../includes/header.jsp" %>
+    <%@include file="../includes/nav.jsp" %>
+    <main class="main">
+        
+    </main>
+    <aside class="asideRight">
+        <%@include file="../includes/filtros.jsp" %>
+    </aside>
+</div>
 <%@include file="../includes/endDoc.jsp" %>

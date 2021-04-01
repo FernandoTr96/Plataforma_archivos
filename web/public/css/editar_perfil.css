@@ -1,0 +1,89 @@
+#form_editar_perfil{
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4,auto);
+    grid-template-areas: 
+    "legend"
+    "correo"
+    "clave"
+    "foto"
+    "submit";
+    gap:2rem;
+    padding: 3rem;
+}
+#form_editar_perfil .form_group{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+#form_editar_perfil .legend{
+    grid-area: legend;
+}
+#form_editar_perfil .input-correo{
+    grid-area: correo;
+}
+#form_editar_perfil .input-clave{
+    grid-area: clave;
+}
+#form_editar_perfil .input-perfil{
+    grid-area: foto;
+}
+#form_editar_perfil .input-submit{
+    grid-area: submit;
+}
+#form_editar_perfil .input-perfil img{
+    width: 80px;
+    height: 80px;
+    border-radius: .5em;
+    margin-top: .5rem;
+    align-self: center;
+    cursor: pointer;
+    opacity: .6;
+}
+#form_editar_perfil .input-perfil img:hover{
+    opacity: 1;
+}
+#form_editar_perfil h1{
+    font-family: sans-serif;
+    color: #222;
+    align-self: center;
+    font-size: large;
+}
+#form_editar_perfil label{
+    font-weight: bold;
+    font-size: large;
+    color: #333;
+}
+#form_editar_perfil button{
+    border: none;
+    background-color: #212f3c;
+    color: #fff;
+    font-weight: bold;
+    padding: .8rem;
+    width: 100%;
+    cursor: pointer;
+    font-size: small;
+    align-self: center;
+}
+#form_editar_perfil button:hover{
+    transition: background-color 200ms;
+    background-color:green;
+}
+#form_editar_perfil input[type=password],#form_editar_perfil input[type=email]{
+    width: 100%;
+    margin-top: .5rem;
+    outline: 0;
+    box-shadow: none;
+    border: none;
+    border-bottom: thin solid #333;
+    padding: .7rem;
+}
+#form_editar_perfil input[type=password]:valid,#form_editar_perfil input[type=email]:valid{
+    border-bottom-color: green;
+}
+#form_editar_perfil input[type=password]:invalid,#form_editar_perfil input[type=email]:invalid{
+    border-bottom-color: red;
+}

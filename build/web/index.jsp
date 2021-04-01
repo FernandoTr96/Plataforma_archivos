@@ -29,6 +29,9 @@
                     <input type="password" placeholder="Contraseña" name="clave" id="clave" required>
                 </div>
                 <div class="form_group error-log">
+                    <%
+                        HttpSession http = request.getSession();
+                    %>
                     <!--Mensajes del login-->
                     <%  if (http.getAttribute("login_user_notfound") != null && http.getAttribute("login_user_notfound").equals(true)) { %>
                     <p class="error mensaje"><% out.print("❌ Este usuario no esta registrado !!"); %></p>
