@@ -5,7 +5,7 @@
  */
 package controlador;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -64,7 +63,7 @@ public class usuario extends HttpServlet {
             switch (action) {
 
                 case "inicio":
-                    verificar_login(request, response);
+                    out.print(verificar_login(request, response));
                     break;
 
                 case "cerrar_sesion":
@@ -107,6 +106,22 @@ public class usuario extends HttpServlet {
                     out.print(updatePerfil(request, response));
                     break;
 
+                case "adminUsuarios":
+                    adminUsuarios(request, response);
+                    break;
+
+                case "listarUsuarios":
+                    out.print(listarUsuarios(request, response));
+                    break;
+
+                case "eliminarUsuario":
+                    out.print(eliminarUsuario(request, response));
+                    break;
+                    
+                case "buscarUsuario":
+                    out.print(buscarUsuario(request, response));
+                    break;
+
                 default:
                     not_found(request, response);
                     break;
@@ -116,7 +131,7 @@ public class usuario extends HttpServlet {
     }
 
     //Metodos auxiliares del controlador para ejecutarlos en servlet (arriba)
-    public void verificar_login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public JsonObject verificar_login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String usuario = request.getParameter("correo");
         String clave = request.getParameter("clave");
@@ -125,29 +140,34 @@ public class usuario extends HttpServlet {
         modelo.setCorreo(usuario);
         modelo.setClave(clave);
 
-        HashMap data = modelo.verificar_login();
-        HttpSession http = request.getSession();
-        
+        JsonObject data = modelo.verificar_login();
+        HttpSession http = request.getSession();;
 
-        if (data.size() <= 1 && data.get("estado").equals(201)) {
-            http.setAttribute("login_user_notfound", true);
-            response.sendRedirect("./");
-        } else if (data.size() <= 1 && data.get("estado").equals(202)) {
-            http.setAttribute("login_pwd_error", true);
-            response.sendRedirect("./");
-        } else {
-            //objeto para la sesion
-            _usuario objusuario = new _usuario();
-            objusuario.setId((int)data.get("id"));
-            objusuario.setNombre((String)data.get("nombre"));
-            objusuario.setPaterno((String)data.get("paterno"));
-            objusuario.setMaterno((String)data.get("materno"));
-            objusuario.setCorreo((String)data.get("correo"));
-            objusuario.setImg((String)data.get("img"));
-            objusuario.setRol((String)data.get("rol"));
-            http.setAttribute("usuario", objusuario);
-            response.sendRedirect("./vista/home/?action=home");
+        switch (data.get("estado").getAsInt()) {
+            case 201:
+                http.setAttribute("login_user_notfound", true);
+                response.sendRedirect("./");
+                break;
+            case 202:
+                http.setAttribute("login_pwd_error", true);
+                response.sendRedirect("./");
+                break;
+            case 200:
+                //objeto para la sesion
+                _usuario objusuario = new _usuario();
+                objusuario.setId(data.get("id").getAsInt());
+                objusuario.setNombre(data.get("nombre").getAsString());
+                objusuario.setPaterno(data.get("paterno").getAsString());
+                objusuario.setMaterno(data.get("materno").getAsString());
+                objusuario.setCorreo(data.get("correo").getAsString());
+                objusuario.setImg(data.get("img").getAsString());
+                objusuario.setRol(data.get("rol").getAsString());
+                http.setAttribute("usuario", objusuario);
+                response.sendRedirect("./vista/home/?action=home");
+                break;
         }
+
+        return data;
 
     }
 
@@ -155,8 +175,7 @@ public class usuario extends HttpServlet {
 
         //instancias
         _usuario modelo = new _usuario();
-        Gson gson = new Gson();
-        HashMap map = new HashMap();
+        JsonObject json = new JsonObject();
 
         //datos y variables
         //cuando se mandan imagenes se debe poner el @multipartConfig hasta arriba del servlet
@@ -176,14 +195,12 @@ public class usuario extends HttpServlet {
 
         boolean fileisvalid = false;
         boolean existe_usuario = modelo.buscarNombreApellidos(nombre, paterno, materno);
-        JsonObject json;
-        HashMap insert;
 
         //rutas a utilizar
         String url = request.getRequestURL().toString();
         String BASE_URL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
         String nombre_proyecto = "plataforma_archivos/";
-        String src_img_perfil = BASE_URL + "/public/res/profile-user.svg";
+        String src_img_perfil = BASE_URL + "public/res/profile-user.svg";
         String dir_usuario = "appData/uploads/" + nombre + "_" + paterno + "_" + materno + "/";
         //getServletContext().getRealPath("/").replace(nombre_proyecto, "")
         String dir_webapps = "/usr/share/tomcat9/webapps/";
@@ -219,13 +236,16 @@ public class usuario extends HttpServlet {
             modelo.setRol(rol);
             modelo.setImg(src_img_perfil);
             modelo.setCodigoSeguridad(RandomString(5));
-            insert = modelo.registrar_usuario();
+            json = modelo.registrar_usuario();
 
-            if (insert.get("estado").equals(200)) {
+            if (json.get("estado").getAsInt() == 200) {
                 //si inserta creamos el directorio y movemos la foto de perfil siempre y cuando sea valido y esxista
                 File usuario = new File(uploads_usuario);
                 if (!usuario.exists()) {
                     usuario.mkdirs();
+                    usuario.canRead();
+                    usuario.canWrite();
+                    usuario.canExecute();
                 }
 
                 if (fileisvalid == true) {
@@ -235,11 +255,9 @@ public class usuario extends HttpServlet {
 
             }
 
-            json = gson.toJsonTree(insert).getAsJsonObject();
-
         } else {
-            map.put("estado", 600);
-            json = gson.toJsonTree(map).getAsJsonObject();
+
+            json.addProperty("estado", 600);
         }
 
         return json;
@@ -248,40 +266,36 @@ public class usuario extends HttpServlet {
     public JsonObject verificarCorreoCambioPwd(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String correo = request.getParameter("correo");
-        JsonObject json;
         boolean existe;
-        HashMap enviado;
+        JsonObject enviado;
 
-        HashMap estado = new HashMap();
         _usuario modelo = new _usuario();
-        Gson gson = new Gson();
+        JsonObject json = new JsonObject();
 
         modelo.setCorreo(correo);
         existe = modelo.correoExiste();
 
         if (existe == true) {
             enviado = email(correo);
-            estado.put("correoEnviado", enviado.get("estado"));
+            json.addProperty("correoEnviado", enviado.get("estado").getAsInt());
         }
 
         if (existe == false) {
-            estado.put("correoEnviado", 201);
+            json.addProperty("correoEnviado", 201);
         }
-
-        json = gson.toJsonTree(estado).getAsJsonObject();
 
         return json;
     }
 
-    public HashMap email(String correo) {
+    public JsonObject email(String correo) {
 
         String destinatario = correo;
         final String username = "pruebassoftware96@gmail.com";
         final String password = "54321halo";
         String codigo = RandomString(5);
-        HashMap estado = new HashMap();
         _usuario modelo = new _usuario();
-        HashMap update;
+        JsonObject json = new JsonObject();
+        JsonObject update;
 
         //Get the session object  
         Properties prop = new Properties();
@@ -313,51 +327,43 @@ public class usuario extends HttpServlet {
             update = modelo.asignarCodigo();
 
             //si se guardo el codigo en la db lo enviamos si no solo mandamos el estado de error que haya salido en la funcion del modelo
-            if (update.get("estado").equals(200)) {
+            if (update.get("estado").getAsInt() == 200) {
                 Transport.send(message);
-                estado.put("estado", 200);
+                json.addProperty("estado", 200);
             } else {
-                estado.put("estado", update.get("estado"));
+                json.addProperty("estado", update.get("estado").getAsInt());
             }
 
         } catch (MessagingException mex) {
-            estado.put("estado", mex.getMessage());
+            json.addProperty("estado", mex.getMessage());
         }
 
-        return estado;
+        return json;
     }
 
     public JsonObject verificarCodigoCambioPwd(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String codigo_enviado = request.getParameter("codigo");
-        HashMap codigodb;
-        JsonObject json;
-        Gson gson = new Gson();
+        JsonObject codigodb;
 
         _usuario modelo = new _usuario();
         modelo.setCodigoSeguridad(codigo_enviado);
         codigodb = modelo.verificarCodigodb();
 
-        json = gson.toJsonTree(codigodb).getAsJsonObject();
-
-        return json;
+        return codigodb;
     }
 
     public JsonObject resetCodigo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String correo = request.getParameter("correo");
         String codigo = RandomString(5);
-        JsonObject json;
-        Gson gson = new Gson();
 
         _usuario modelo = new _usuario();
         modelo.setCorreo(correo);
         modelo.setCodigoSeguridad(codigo);
-        HashMap asignarCodigo = modelo.asignarCodigo();
+        JsonObject asignarCodigo = modelo.asignarCodigo();
 
-        json = gson.toJsonTree(asignarCodigo).getAsJsonObject();
-
-        return json;
+        return asignarCodigo;
     }
 
     public JsonObject cambiarPwd(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -365,18 +371,15 @@ public class usuario extends HttpServlet {
         String correo = request.getParameter("correo");
         String clave = request.getParameter("pwd");
         String claveBcrypt = BCrypt.hashpw(clave, BCrypt.gensalt(10));
-        HashMap cambiarPwd;
-        JsonObject json;
-        Gson gson = new Gson();
+        JsonObject cambiarPwd;
 
         _usuario modelo = new _usuario();
         modelo.setCorreo(correo);
         modelo.setClave(claveBcrypt);
 
         cambiarPwd = modelo.cambiarPwd();
-        json = gson.toJsonTree(cambiarPwd).getAsJsonObject();
 
-        return json;
+        return cambiarPwd;
 
     }
 
@@ -384,8 +387,6 @@ public class usuario extends HttpServlet {
 
         //instancias
         _usuario modelo = new _usuario();
-        Gson gson = new Gson();
-        HashMap map = new HashMap();
 
         //datos y variables
         //cuando se mandan imagenes se debe poner el @multipartConfig hasta arriba del servlet
@@ -397,40 +398,37 @@ public class usuario extends HttpServlet {
         String nombre_archivo = path.getFileName().toString();
         InputStream input = foto.getInputStream();
         String[] extension = {".ico", ".png", ".jpg", ".svg+xml", ".svg", ".jpeg"};
-        JsonObject json;
-        HashMap update;
+        JsonObject update;
         String src_img_perfil = "";
         boolean fileisvalid = false;
 
         //obtener datos de la sesion
         HttpSession http = request.getSession();
         _usuario sesion = (_usuario) http.getAttribute("usuario");
-       
+
         int id_sesion = sesion.getId();
         String nombre_sesion = sesion.getNombre();
         String paterno_sesion = sesion.getPaterno();
         String materno_sesion = sesion.getMaterno();
         String img_sesion = sesion.getImg();
- 
 
         //rutas a utilizar
         String url = request.getRequestURL().toString();
         String BASE_URL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
         String nombre_proyecto = "plataforma_archivos/";
-        String dir_usuario = "appData/uploads/" + nombre_sesion.toUpperCase() + "_" + paterno_sesion.toUpperCase() + "_" + materno_sesion.toUpperCase()+"/";
+        String dir_usuario = "appData/uploads/" + nombre_sesion.toUpperCase() + "_" + paterno_sesion.toUpperCase() + "_" + materno_sesion.toUpperCase() + "/";
         //getServletContext().getRealPath("/").replace(nombre_proyecto, "")
         String dir_webapps = "/usr/share/tomcat9/webapps/";
         String uploads_usuario = dir_webapps + dir_usuario;
-        String nombre_foto_anterior = img_sesion.replace(BASE_URL.replace(nombre_proyecto,"")+dir_usuario,"");
+        String nombre_foto_anterior = img_sesion.replace(BASE_URL.replace(nombre_proyecto, "") + dir_usuario, "");
         String ruta_foto_anterior = uploads_usuario + nombre_foto_anterior;
         File fotoAnterior = new File(ruta_foto_anterior);
-         
-         
+
         //ver que el archivo sea uno permitido
         if (input != null) {
             for (String ext : extension) {
                 if (nombre_archivo.toLowerCase().endsWith(ext)) {
-                    src_img_perfil = BASE_URL.replace(nombre_proyecto, "") + dir_usuario + nombre_archivo;           
+                    src_img_perfil = BASE_URL.replace(nombre_proyecto, "") + dir_usuario + nombre_archivo;
                     fileisvalid = true;
                     fotoAnterior.delete();
                     break;
@@ -442,11 +440,14 @@ public class usuario extends HttpServlet {
         modelo.setId(id_sesion);
         modelo.setCorreo(correo);
         modelo.setClave(claveBcrypt);
-        if(src_img_perfil.equals("")){  modelo.setImg(img_sesion); }
-        else{ modelo.setImg(src_img_perfil);}
+        if (src_img_perfil.equals("")) {
+            modelo.setImg(img_sesion);
+        } else {
+            modelo.setImg(src_img_perfil);
+        }
         update = modelo.updatePerfil();
 
-        if (update.get("estado").equals(200)) {
+        if (update.get("estado").getAsInt() == 200) {
 
             if (fileisvalid == true) {
                 File archivo = new File(uploads_usuario, nombre_archivo);
@@ -454,21 +455,84 @@ public class usuario extends HttpServlet {
             }
 
         }
-        
-        //crear json
-        json = gson.toJsonTree(update).getAsJsonObject();
-        
+
         //refrescar la sesion con los nuevos datos
         sesion.setCorreo(correo);
-        if(src_img_perfil.equals("")){  sesion.setImg(img_sesion); }
-        else{ sesion.setImg(src_img_perfil); }
+        if (src_img_perfil.equals("")) {
+            sesion.setImg(img_sesion);
+        } else {
+            sesion.setImg(src_img_perfil);
+        }
         http.setAttribute("usuario", sesion);
 
+        return update;
+    }
+
+    public JsonArray listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JsonArray json;
+        _usuario modelo = new _usuario();
+        json = modelo.listarUsuarios();
+
+        return json;
+    }
+
+    public JsonObject eliminarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        _usuario modelo = new _usuario();
+
+        String id = request.getParameter("id");
+        modelo.setId(Integer.parseInt(id));
+
+        JsonObject getNombreyApellidos = modelo.getNombreyApellidos();
+
+        String nombre = getNombreyApellidos.get("nombre").getAsString();
+        String paterno = getNombreyApellidos.get("paterno").getAsString();
+        String materno = getNombreyApellidos.get("materno").getAsString();
+
+        String nombre_proyecto = "plataforma_archivos/";
+        String dir_usuario = "appData/uploads/" + nombre + "_" + paterno + "_" + materno;
+        //getServletContext().getRealPath("/").replace(nombre_proyecto, "")
+        String dir_webapps = "/usr/share/tomcat9/webapps/";
+        String uploads_usuario = dir_webapps + dir_usuario;
+        JsonObject eliminar = modelo.eliminarUsuario();
+
+        if (eliminar.get("estado").getAsInt() == 200) {
+            File directorio = new File(uploads_usuario);
+            borrarCarpetaUsuario(directorio);
+        }
+
+        return eliminar;
+    }
+    
+    public void borrarCarpetaUsuario(File directorio)
+    {
+        File[] array = directorio.listFiles();
+                
+        if (array != null) {                   
+            for (File archivo : array) {
+                archivo.delete();
+            }
+        }
+
+        directorio.delete();
+    }
+    
+    public JsonArray buscarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+        String palabra = request.getParameter("usuario");
+        JsonArray json;
+        _usuario modelo = new _usuario();
+        json = modelo.buscarUsuario(palabra);
+        
         return json;
     }
 
     public void form_editar_perfil(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendRedirect("./vista/usuario/form_editar_perfil.jsp?action=editar_perfil");
+    }
+
+    public void adminUsuarios(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("./vista/usuario/adminUsuarios.jsp?action=adminUsuarios");
     }
 
     public void not_found(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

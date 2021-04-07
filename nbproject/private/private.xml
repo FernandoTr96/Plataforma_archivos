@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/public/css/home.css</file>
             <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/public/js/app.js</file>
-            <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/vista/includes/nav.jsp</file>
-            <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/public/js/home.js</file>
+            <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/vista/usuario/adminUsuarios.jsp</file>
+            <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/public/css/adminUsuarios.css</file>
             <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/src/java/controlador/usuario.java</file>
             <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/src/java/modelo/_usuario.java</file>
-            <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/vista/home/index.jsp</file>
+            <file>file:/home/fernando/NetBeansProjects/plataforma_archivos/web/public/js/adminUsuarios.js</file>
         </group>
     </open-files>
 </project-private>

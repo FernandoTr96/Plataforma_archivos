@@ -86,7 +86,7 @@ export function enviarCodigo(){
         metodo: $form.method,
         data: datos,
         cs: (json)=>{
-
+            
             if(json.correoEnviado === 200)
             {                
                 document.querySelector('.form_container .form_items').classList.add("translate-100");

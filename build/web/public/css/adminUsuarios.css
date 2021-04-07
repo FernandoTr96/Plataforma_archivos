@@ -1,0 +1,48 @@
+.adminUsuarios-container{
+    grid-template-areas: 
+    "header header header"
+    "nav    main   main"
+    ;
+}
+#buscar_usuario{
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+#buscar_usuario label{
+    font-weight: bold;
+    font-family: sans-serif;
+    margin-bottom: .3rem;
+}
+#table-usuarios td i:hover{
+    transition: color 200ms;
+    color: #ec2f2f;
+}
+.loader-usuarios{
+    width: 20px;
+    height: 20px;
+}
+
+/*MEDIA QUERY*/
+@media only screen and (min-width: 0px)  and (max-width: 500px){ 
+    .adminUsuarios-container{
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+}
+
+@media only screen and (min-width: 501px)  and (max-width: 900px){
+    .adminUsuarios-container{
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+}

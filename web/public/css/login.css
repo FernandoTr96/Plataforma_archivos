@@ -107,7 +107,7 @@ main{
         padding: .3rem;
     }
     #form-login .btn-submit button{
-        padding: .4rem;
+        padding: .5rem;
         font-size: medium;
     }
 }
@@ -116,7 +116,7 @@ main{
         padding: 1rem;
     }
     #form-login .btn-submit button{
-        padding: .4rem;
+        padding: 1rem;
         font-size: medium;
     }
 }

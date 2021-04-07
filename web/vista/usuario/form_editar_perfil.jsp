@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@include file="../includes/head.jsp" %>
-<div class="root-container">
+<div class="root-container editar-perfil-container">
     <%@include file="../includes/header.jsp" %>
     <%@include file="../includes/nav.jsp" %>
     <main class="main">

@@ -7,7 +7,7 @@
     </button>
 </form>
 <div>
-    <label for="prioridad">Buscar mediante prioridad</label>
+    <label for="prioridad">Buscar por prioridad</label>
     <select name="prioridad" id="prioridad"> 
         <option value="normal">Normal</option>
         <option value="urgente">urgente</option>

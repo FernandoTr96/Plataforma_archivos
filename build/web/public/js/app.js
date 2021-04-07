@@ -2,8 +2,9 @@
 import {validarCamposLogin,deshabilitaRetroceso} from './login.js';
 import {validarCamposRegistro,verImagFormRegistro,registrar_usuario,mostrarClaveFomRegistro} from './form_registro.js';
 import {validarCamposRecuperarPwd,enviarCodigo,verificarCodigo,cambiarPwd} from './form_password.js';
-import {btnMenuMovil} from './home.js';
+import {btnMenuMovil,btnMenuFiltrosMovil} from './home.js';
 import {validarCamposPerfil,updatePerfil} from './editar_perfil.js';
+import {listarUsuarios,eliminarUsuario,buscarUsuario} from './adminUsuarios.js';
 
 //variables que usare mucho
 const d = document;
@@ -16,6 +17,7 @@ d.addEventListener('DOMContentLoaded',e=>{
     validarCamposLogin();
     validarCamposRecuperarPwd();
     validarCamposPerfil();
+    listarUsuarios();
 });
 
 d.addEventListener('submit',e=>{
@@ -69,5 +71,20 @@ d.addEventListener('click',e=>{
     //mostrar menu movil
     if(e.target.matches(".hamburger")|| e.target.matches(".hamburger *")){
         btnMenuMovil(".root-container .nav",".hamburger");
+    }
+    //menu filtros movil
+    if(e.target.matches(".btn-filtro") || e.target.matches(".btn-filtro *")){
+       btnMenuFiltrosMovil(".root-container .asideRight",".root-container .btn-filtro");
+    }
+    //eliminar usuario
+    if(e.target.matches("#btnEliminarUsuario")){
+        eliminarUsuario(e.target);
+    }
+});
+
+d.addEventListener('keyup',e=>{
+    //buscar usuario al escribir en adminUsuarios
+    if(e.target.matches("#usuario")){
+        buscarUsuario();
     }
 });

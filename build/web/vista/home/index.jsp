@@ -10,5 +10,8 @@
     <aside class="asideRight">
         <%@include file="../includes/filtros.jsp" %>
     </aside>
+    <div class="btn-filtro">
+        <i class="fas fa-search"></i>
+    </div>
 </div>
 <%@include file="../includes/endDoc.jsp" %>

@@ -1,3 +1,4 @@
+/*TODA LA PAGINA*/
 *{
     padding: 0;
     margin: 0;
@@ -19,16 +20,98 @@ h1,h2,h3,h4,h5,h6{
     font-family: serif;
 }
 
+/*CLASES PARA EROR Y MOSTRAR ELEMENTOS*/
 .error{
     width: 100%;
     height: auto;
     color: crimson;
     font-weight: 400;
-    font-size: medium;
+    font-size: small;
     display: block;
     text-align: center;
     margin-top: .7rem;
 }
 .none{
     display: none;
+}
+
+/*CONTENEDOR DE TABLAS*/
+.table-container{
+    width: 90%;
+    height: auto;
+    overflow-x: scroll;
+    margin: auto;
+    scrollbar-width: none;
+}
+.table-container::-webkit-scrollbar {
+    display: none;
+}
+
+/*DISEÑO GLOBAL DE TABLA*/
+.table{
+    width: 100%;
+    height: auto;
+    margin: auto;
+    border-collapse: collapse;
+    text-align: center;
+}
+.table thead{
+    background-color: whitesmoke;
+    color: #1c2833;
+}
+.table td,#table-usuarios th{
+    border-bottom: thin solid rgba(0,0,0,.2);
+    padding: .3rem;
+}
+.table td{
+    background-color: #fff;
+}
+.table td i{
+    color: #333;
+    font-size: large;
+    cursor: pointer;
+}
+.table td img{
+    width:  50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+/*DISEÑO GLOBAL ERROR 404*/
+.container-error{
+    width: 50%;
+    height: auto;
+    padding: 2rem;
+    background-color: #e8e8e8;
+    border-radius: .5em;
+    display: block;
+    margin: auto;
+    text-align: center;
+    margin-top: 12%;
+}
+.container-error img{
+    width: 6rem;
+    height: auto;
+    border-radius: 50%;
+    transition: transform 600ms;
+    animation: shake 600ms linear infinite alternate;
+}
+.container-error h1{
+    color: midnightblue;
+}
+.container-error h1, .container-error p{
+    text-align: justify;
+}
+@keyframes shake{
+    0%{
+        transform: rotate(-45deg);
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(45deg);
+    }
 }

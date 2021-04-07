@@ -20,6 +20,7 @@ export async function $ajax(params){
     }
     catch(error)
     {
+       console.error(error);
        cf(error);
     }    
     

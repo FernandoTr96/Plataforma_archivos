@@ -79,35 +79,47 @@ export function updatePerfil($formulario){
     const datos = new FormData($formulario);
     const $input_file_img = document.querySelector("#form_editar_perfil .input-perfil label > img");
     
-    $ajax({
-        url: $formulario.action,
-        metodo: $formulario.method,
-        data: datos,
-        cs:(data)=>{
-            
-            if(data.estado === 200)
-            {
-                swal("Datos actualizados","Los datos se actualizaron con exito...","success");
-                $input_file_img.src = $input_file_img.dataset.default;
-                setTimeout(()=>{
-                    window.location.reload()
-                },3000);
-            }
-            else if(data.estado === 400)
-            {
-                swal("Datos no actualizados","Hubo un problema al intentar actualizar los datos !! ningun registro fue alterado","warning");
-            }
-            else if(data.estado === 500)
-            {
-                swal("Correo duplicado","El correo ingresado ya esta registrado, utilice otro !!","error");
-            }
-            else{
-                swal("Error",`${data.estado}`,"error");
-            }
+    swal({
+        title: "¿Estas seguro?",
+        text: "Los datos de tu cuenta van a cambiar !!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((ok) => {
+        if(ok) 
+        {
+            $ajax({
+                url: $formulario.action,
+                metodo: $formulario.method,
+                data: datos,
+                cs:(data)=>{
 
-        },
-        cf:(err)=>{
-            swal("Error de peticion",`Error ${err} : ${err.status} : ${err.text}`, "error");
+                    if(data.estado === 200)
+                    {
+                        swal("Datos actualizados","Los datos se actualizaron con exito...","success");
+                        $input_file_img.src = $input_file_img.dataset.default;
+                        setTimeout(()=>{
+                            window.location.reload()
+                        },3000);
+                    }
+                    else if(data.estado === 400)
+                    {
+                        swal("Datos no actualizados","Hubo un problema al intentar actualizar los datos !! ningun registro fue alterado","warning");
+                    }
+                    else if(data.estado === 500)
+                    {
+                        swal("Correo duplicado","El correo ingresado ya esta registrado, utilice otro !!","error");
+                    }
+                    else{
+                        swal("Error",`${data.estado}`,"error");
+                    }
+
+                },
+                cf:(err)=>{
+                    swal("Error de peticion",`Error ${err} : ${err.status} : ${err.text}`, "error");
+                }
+            });
         }
     });
 }

@@ -1,3 +1,9 @@
+.editar-perfil-container{
+    grid-template-areas: 
+    "header header header"
+    "nav    main   main"
+    ;
+}
 #form_editar_perfil{
     width: 100%;
     height: auto;
@@ -12,6 +18,7 @@
     "submit";
     gap:2rem;
     padding: 3rem;
+    margin: auto;
 }
 #form_editar_perfil .form_group{
     display: flex;
@@ -86,4 +93,23 @@
 }
 #form_editar_perfil input[type=password]:invalid,#form_editar_perfil input[type=email]:invalid{
     border-bottom-color: red;
+}
+
+/*MEDIA QUERY*/
+@media only screen and (min-width: 0px)  and (max-width: 500px){ 
+    .editar-perfil-container{
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+}
+
+@media only screen and (min-width: 501px)  and (max-width: 900px){
+    .editar-perfil-container{
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
 }

@@ -5,6 +5,7 @@
     <form action="<%out.print(BASE_URL);%>/usuario?action=guardar_usuario" method="POST" id="form_usuario" enctype="multipart/form-data">
         <div class="form_group legend">
             <h1>Formulario de registro</h1>
+            <img src="<%out.print(BASE_URL);%>/public/res/puff.svg" class="loader-registro none" width="20px" height="20px" alt="alt"/>
         </div>
         <div class="form_group input-nombre">
             <input type="text" name="nombre" id="nombre"  

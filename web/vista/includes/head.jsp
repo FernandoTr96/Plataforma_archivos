@@ -13,11 +13,11 @@
         <link rel="shortcut icon" href="<% out.print(BASE_URL); %>/public/res/civil-right.svg"/>
         <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/lib/hamburgerjs/hamburgers.css"/>
         <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/css/global_config.css"/>
-        <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/css/error.css"/>
         <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/css/form_usuario.css"/>
         <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/css/form_password.css"/>
         <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/css/home.css"/>
         <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/css/editar_perfil.css"/>
+        <link rel="stylesheet" href="<% out.print(BASE_URL); %>/public/css/adminUsuarios.css"/>
         <title>Juridico | <% out.print(title); %></title>
     </head>
     <body>

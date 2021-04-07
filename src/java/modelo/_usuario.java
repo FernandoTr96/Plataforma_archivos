@@ -5,12 +5,14 @@
  */
 package modelo;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mysql_manager.mysql_manager;
@@ -33,7 +35,7 @@ public class _usuario {
     private String codigoSeguridad;
 
     Connection conexion = new mysql_manager().getConn();
-    HashMap map = new HashMap();
+    Gson gson = new Gson();
 
     /**
      * @return the id
@@ -161,7 +163,7 @@ public class _usuario {
         this.codigoSeguridad = codigoSeguridad;
     }
 
-    public HashMap verificar_login() {
+    public JsonObject verificar_login() {
 
         int iddb = 0;
         String nombredb = "";
@@ -172,6 +174,7 @@ public class _usuario {
         String imgdb = "";
         String clavedb = "";
         String query = "SELECT * FROM usuarios WHERE correo='" + this.getCorreo() + "'";
+        JsonObject json = new JsonObject();
 
         try {
 
@@ -181,7 +184,7 @@ public class _usuario {
             if (!result.isBeforeFirst()) {
 
                 //en caso de que no exista el usuario regresamos en el map el estado 201
-                map.put("estado", 201);
+                json.addProperty("estado", 201);
 
             } else {
 
@@ -202,17 +205,18 @@ public class _usuario {
                 //si existe el usuario comparamos las contraseñas la encriptada y la del formulario
                 if (BCrypt.checkpw(this.getClave().trim(), clavedb.trim())) {
 
-                    map.put("id", iddb);
-                    map.put("nombre", nombredb);
-                    map.put("paterno", paternodb);
-                    map.put("materno", maternodb);
-                    map.put("correo", correodb);
-                    map.put("rol", roldb);
-                    map.put("img", imgdb);
+                    json.addProperty("id", iddb);
+                    json.addProperty("nombre", nombredb);
+                    json.addProperty("paterno", paternodb);
+                    json.addProperty("materno", maternodb);
+                    json.addProperty("correo", correodb);
+                    json.addProperty("rol", roldb);
+                    json.addProperty("img", imgdb);
+                    json.addProperty("estado", 200);
 
                 } else {
                     //si no coincide mandare un estado 202
-                    map.put("estado", 202);
+                    json.addProperty("estado", 202);
                 }
 
             }
@@ -223,13 +227,14 @@ public class _usuario {
 
         }
 
-        return map;
+        return json;
     }
 
-    public HashMap registrar_usuario() {
+    public JsonObject registrar_usuario() {
 
         String query = "INSERT INTO usuarios(nombre,paterno,materno,correo,clave,rol,img,codigo_seguridad) VALUES(?,?,?,?,?,?,?,?)";
-
+        JsonObject json = new JsonObject();
+        
         try {
 
             PreparedStatement ps = conexion.prepareStatement(query);
@@ -246,9 +251,9 @@ public class _usuario {
             int afectadas = ps.executeUpdate();
 
             if (afectadas != 0) {
-                map.put("estado", 200);
+                json.addProperty("estado", 200);
             } else {
-                map.put("estado", 400);
+                json.addProperty("estado", 400);
             }
 
             conexion.close();
@@ -258,13 +263,13 @@ public class _usuario {
             Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
 
             if (e.getErrorCode() == 1062) {
-                map.put("estado", 500);
+                json.addProperty("estado", 500);
             } else {
-                map.put("estado", e.getMessage());
+                json.addProperty("estado", e.getMessage());
             }
         }
 
-        return map;
+        return json;
     }
 
     public boolean buscarNombreApellidos(String nombre, String paterno, String materno) {
@@ -327,10 +332,11 @@ public class _usuario {
         return existe;
     }
 
-    public HashMap asignarCodigo() {
+    public JsonObject asignarCodigo() {
 
         String query = "UPDATE usuarios set codigo_seguridad = ? WHERE correo = '" + this.getCorreo() + "'";
-
+        JsonObject json = new JsonObject();
+        
         try {
 
             PreparedStatement ps = conexion.prepareStatement(query);
@@ -338,9 +344,9 @@ public class _usuario {
             int afectadas = ps.executeUpdate();
 
             if (afectadas != 0) {
-                map.put("estado", 200);
+                json.addProperty("estado", 200);
             } else {
-                map.put("estado", 400);
+                json.addProperty("estado", 400);
             }
 
             conexion.close();
@@ -348,16 +354,17 @@ public class _usuario {
         } catch (SQLException e) {
 
             Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
-            map.put("estado", e.getMessage());
+            json.addProperty("estado", e.getMessage());
         }
 
-        return map;
+        return json;
     }
 
-    public HashMap verificarCodigodb() {
+    public JsonObject verificarCodigodb() {
 
         String query = "SELECT * FROM usuarios WHERE codigo_seguridad='" + this.getCodigoSeguridad() + "'";
-
+        JsonObject json = new JsonObject();
+        
         try {
 
             Statement st = conexion.createStatement();
@@ -366,27 +373,27 @@ public class _usuario {
             if (!result.isBeforeFirst()) {
 
                 //en caso de que no exista el usuario 
-                map.put("estado", 201);
+                json.addProperty("estado", 201);
 
             } else {
 
-                map.put("estado", 200);
+                json.addProperty("estado", 200);
             }
 
         } catch (SQLException e) {
 
             Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
-            map.put("estado", e.getMessage());
+            json.addProperty("estado", e.getMessage());
 
         }
 
-        return map;
+        return json;
     }
 
-    public HashMap cambiarPwd() {
+    public JsonObject cambiarPwd() {
 
         String query = "UPDATE usuarios set clave = ? WHERE correo = '" + this.getCorreo() + "'";
-        
+        JsonObject json = new JsonObject();
         
         try {
 
@@ -395,9 +402,9 @@ public class _usuario {
             int afectadas = ps.executeUpdate();
 
             if (afectadas != 0) {
-                map.put("estado", 200);
+                json.addProperty("estado", 200);
             } else {
-                map.put("estado", 400);
+                json.addProperty("estado", 400);
             }
 
             conexion.close();
@@ -405,15 +412,16 @@ public class _usuario {
         } catch (SQLException e) {
 
             Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
-            map.put("estado", e.getMessage());
+            json.addProperty("estado", e.getMessage());
         }
 
-        return map;
+        return json;
     }
-    
-    public HashMap updatePerfil(){
-        
-        String query = "UPDATE usuarios set correo = ? , clave = ? , img = ?  WHERE id ="+ this.getId();
+
+    public JsonObject updatePerfil() {
+
+        String query = "UPDATE usuarios set correo = ? , clave = ? , img = ?  WHERE id =" + this.getId();
+        JsonObject json = new JsonObject();
         
         try {
 
@@ -424,9 +432,9 @@ public class _usuario {
             int afectadas = ps.executeUpdate();
 
             if (afectadas != 0) {
-                map.put("estado", 200);
+                json.addProperty("estado", 200);
             } else {
-                map.put("estado", 400);
+                json.addProperty("estado", 400);
             }
 
             conexion.close();
@@ -435,12 +443,166 @@ public class _usuario {
 
             Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
             if (e.getErrorCode() == 1062) {
-                map.put("estado", 500);
+                json.addProperty("estado", 500);
             } else {
-                map.put("estado", e.getMessage());
+                json.addProperty("estado", e.getMessage());
             }
         }
 
-        return map;
+        return json;
+    }
+    
+    
+    public JsonArray listarUsuarios() {
+        
+        JsonArray array = new JsonArray();
+        String  query = "SELECT * FROM usuarios";
+        JsonObject json = new JsonObject();
+        
+        try
+        {
+            
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(query);
+           
+            if (!rs.isBeforeFirst()) {
+
+                //en caso de que no existan usuarios
+                json.addProperty("estado", 201);
+                array.add(json);
+
+            }else{
+                
+                while (rs.next())
+                {
+                    JsonObject subObj = new JsonObject();
+                    subObj.addProperty("id", rs.getInt("id"));
+                    subObj.addProperty("nombre", rs.getString("nombre") +" "+rs.getString("paterno")+" "+rs.getString("materno"));
+                    subObj.addProperty("correo", rs.getString("correo"));
+                    subObj.addProperty("rol", rs.getString("rol"));
+                    subObj.addProperty("img", rs.getString("img"));
+                    array.add(subObj);
+                }
+                
+                conexion.close();
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            json.addProperty("estado", e.getMessage());
+            array.add(json);
+        }
+        
+        return array;
+    }
+    
+    
+    public JsonObject eliminarUsuario() {
+
+        String query = "DELETE FROM usuarios  WHERE id = ?";
+        JsonObject json = new JsonObject();
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, this.getId());
+            int afectadas = ps.executeUpdate();
+
+            if (afectadas != 0) {
+                json.addProperty("estado", 200);
+            } else {
+                json.addProperty("estado", 400);
+            }
+
+            conexion.close();
+
+        } catch (SQLException e) {
+
+            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
+            json.addProperty("estado", e.getMessage());
+        }
+
+        return json;
+    }
+    
+    public JsonObject getNombreyApellidos(){
+        
+        String  query = "SELECT nombre,paterno,materno FROM usuarios where id ="+this.getId();
+        JsonObject json = new JsonObject();
+        
+        try
+        {
+            
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(query);
+           
+            if (!rs.isBeforeFirst()) {
+
+                //en caso de que no existan usuarios
+                json.addProperty("estado", 201);
+
+            }else{
+                
+                while (rs.next())
+                {
+                    json.addProperty("nombre", rs.getString("nombre"));
+                    json.addProperty("paterno", rs.getString("paterno"));
+                    json.addProperty("materno", rs.getString("materno"));
+                }
+                
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            json.addProperty("estado", e.getMessage());
+        }
+        
+        return json;
+    }
+    
+    public JsonArray buscarUsuario(String palabra) {
+        
+        JsonArray array = new JsonArray();
+        String  query = "SELECT * FROM usuarios WHERE nombre LIKE '%"+palabra+"%' OR paterno LIKE '%"+palabra+"%' OR materno LIKE '%"+palabra+"%' OR correo LIKE '%"+palabra+"%'";
+        JsonObject json = new JsonObject();
+        
+        try
+        {
+            
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(query);
+           
+            if (!rs.isBeforeFirst()) {
+
+                //en caso de que no existan usuarios
+                json.addProperty("estado", 201);
+                array.add(json);
+
+            }else{
+                
+                while (rs.next())
+                {
+                    JsonObject subObj = new JsonObject();
+                    subObj.addProperty("id", rs.getInt("id"));
+                    subObj.addProperty("nombre", rs.getString("nombre") +" "+rs.getString("paterno")+" "+rs.getString("materno"));
+                    subObj.addProperty("correo", rs.getString("correo"));
+                    subObj.addProperty("rol", rs.getString("rol"));
+                    subObj.addProperty("img", rs.getString("img"));
+                    array.add(subObj);
+                }
+                
+                conexion.close();
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            json.addProperty("estado", e.getMessage());
+            array.add(json);
+        }
+        
+        return array;
     }
 }
