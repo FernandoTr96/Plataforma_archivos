@@ -12,9 +12,9 @@ export async function $ajax(params){
     
     try
     {
-       let response = await fetch(url,opciones); 
+       let response = await fetch(url,opciones);
        let json = await response.json();
-       
+
        if(!response.ok){ throw {status:response.status,text:response.statusText}; }
        cs(json);
     }

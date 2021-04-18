@@ -54,9 +54,6 @@ main{
     font-size: medium;
     color: #333;
 }
-#form-login .input-correo input:valid , #form_login.input-clave input:valid{
-    border-bottom-color: green;
-}
 #form-login .input-correo i, .input-clave i{
     width: 10%;
     background-color: #222;

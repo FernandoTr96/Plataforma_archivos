@@ -1,0 +1,258 @@
+.adminPublicaciones-container{
+    grid-template-areas: 
+    "header header header"
+    "nav    main   main"
+    ;
+}
+#buscar_publicacion{
+    width: 90%;
+    height: auto;
+    display: grid;
+    margin: auto;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "buscar  nueva";
+}
+.buscadorPublicaciones{
+    grid-area: buscar;
+    display: flex;
+    flex-wrap: wrap;
+}
+.nuevaPublicacion{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    grid-area: nueva;
+}
+#buscar_publicacion label{
+    width: 100%;
+    font-weight: bold;
+    font-family: sans-serif;
+    margin-bottom: .3rem;
+}
+#buscar_publicacion button{
+   border: none;
+   background-color: #212f3c;
+   color: #fff;
+   padding: .5rem;
+   transform: scale(0.95);
+   box-shadow: 1px 1px 1px 1px rgba(0,0,0,.2);
+}
+#buscar_publicacion button:hover{
+    transition: background-color 200ms;
+    background-color: green;
+    cursor: pointer;
+}
+#buscar_publicacion a{
+    text-decoration: none;
+    font-size: medium;
+    color: #fff;
+    background-color: #1c2833;
+    font-weight: bold;
+    padding: .4rem;
+    border-radius: .3em;
+}
+#buscar_publicacion a:hover{
+    transition: background 200ms;
+    background: rgb(94,81,167);
+    background: linear-gradient(82deg, rgba(94,81,167,1) 6%, rgba(12,76,184,0.9163865375251663) 100%); 
+}
+.modal{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 4rem;
+    background-color: rgba(0,0,0,.5);
+    transition: opacity 500ms;
+}
+#form-publicaciones{
+    width: 70%;
+    height: auto;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(5,auto);
+    grid-template-areas: 
+    "legend        legend"
+    "titulo        prioridad"
+    "descripcion   fecha_inicial"
+    "descripcion   fecha_final"
+    "descripcion   submit"
+    ;
+    gap:2rem;
+    background-color: whitesmoke;
+    padding: 3rem;
+    border-radius: .5em;
+    position: relative;
+}
+#form-publicaciones .form_group{
+    display: flex;
+    flex-direction: column;
+}
+#form-publicaciones .legend{
+    grid-area: legend;
+    text-align: center;
+}
+#form-publicaciones .legend h1{
+    font-family: sans-serif;
+    font-size: large;
+    color: #212f3c;
+    align-self: flex-start;
+}
+#form-publicaciones .titulo{
+    grid-area: titulo;
+}
+#form-publicaciones .descripcion{
+    grid-area: descripcion;
+}
+#form-publicaciones .prioridad{
+    grid-area: prioridad;
+}
+#form-publicaciones .fecha_inicial{
+    grid-area: fecha_inicial;
+}
+#form-publicaciones .fecha_final{
+    grid-area: fecha_final;
+}
+#form-publicaciones .submit{
+    grid-area: submit;
+}
+#form-publicaciones input, #form-publicaciones select{
+    border: none;
+    padding: .5rem;
+}
+#form-publicaciones button{
+    padding: .5rem;
+    border: none;
+    background-color: #212f3c;
+    color:#fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+#form-publicaciones button:hover{
+    transition: background 200ms;
+    background: rgb(94,81,167);
+    background: linear-gradient(82deg, rgba(94,81,167,1) 6%, rgba(12,76,184,0.9163865375251663) 100%); 
+}
+#form-publicaciones input{
+    box-shadow: none;
+    outline: 0;
+}
+#form-publicaciones textArea{
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: .5rem;
+    resize: none;
+    outline: 0;
+    font-size: large;
+}
+#form-publicaciones label{
+    font-weight: bold;
+    margin-bottom: .3rem;
+}
+.close-modal{
+    width: 2rem;
+    height: 2rem;
+    color: #212f3c;
+    font-size: large;
+    position: absolute;
+    top: calc(1rem);
+    right: calc(0rem);
+    cursor: pointer;
+}
+.close-modal:hover{
+    color: #ec2f2f;
+}
+#table-publicaciones tbody tr td i:hover{
+    transition: color 200ms;
+    color: #ec2f2f;
+}
+.loader-publicaciones{
+    width: 1.5rem;
+    height: 1.5rem;
+    align-self: center;
+    margin-top: .3rem;
+}
+.buscadorPublicaciones .loader-tabla-publicaciones{
+    width: 2rem;
+    height: 2rem;
+    align-self: center;
+    margin-left: 1rem;
+}
+
+/*MEDIA QUERY*/
+@media only screen and (min-width: 0px)  and (max-width: 500px){ 
+    .adminPublicaciones-container{
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+    #buscar_publicacion{
+        grid-template-columns: 90% 10%;
+        grid-template-areas: 
+        "buscar nueva";
+    }
+    .modal{
+        padding: 0;
+        margin-top: 3rem;
+    }
+    #form-publicaciones{
+        width: 100%;
+        height: 100vh;
+        border-radius: 0em;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(7,auto);
+        grid-template-areas:
+        "legend"
+        "titulo"
+        "prioridad"
+        "fecha_inicial"
+        "fecha_final"
+        "descripcion"
+        "submit"
+        ;
+    }
+}
+
+@media only screen and (min-width: 501px)  and (max-width: 900px){
+    .adminPublicaciones-container{
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+    #buscar_publicacion{
+        grid-template-columns: 90% 10%;
+        grid-template-areas: 
+        "buscar nueva";
+    }
+    .modal{
+        padding: 0;
+        margin-top: 3rem;
+    }
+    #form-publicaciones{
+        width: 100%;
+        height: 100vh;
+        border-radius: 0em;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(7,auto);
+        grid-template-areas:
+        "legend"
+        "titulo"
+        "prioridad"
+        "fecha_inicial"
+        "fecha_final"
+        "descripcion"
+        "submit"
+        ;
+    }
+}

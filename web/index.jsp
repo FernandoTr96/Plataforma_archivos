@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="helpers/getTitle.jsp" %>
 <%@include file="helpers/constantes.jsp" %>
@@ -18,7 +19,7 @@
         <main>
             <form action="<%out.print(BASE_URL);%>/usuario?action=inicio" method="POST" autocomplete="nope" id="form-login" >
                 <div class="form_group imagen">
-                    <img src="<%out.print(BASE_URL);%>/public/res/congreso.png" alt="logo"/>
+                    <img src="<%out.print(BASE_URL);%>/public/res/congreso.png" alt="logo"/> 
                 </div>
                 <div class="form_group input-correo">
                     <i class="fas fa-user"></i>

@@ -6,7 +6,7 @@
     <%@include file="../includes/header.jsp" %>
     <%@include file="../includes/nav.jsp" %>
     <main class="main">
-        <form action="" method="POST" id="buscar_usuario">
+        <form id="buscar_usuario">
             <label for="usuario">Buscar un usuario</label>
             <input type="search" name="usuario" id="usuario" placeholder="...">
         </form>

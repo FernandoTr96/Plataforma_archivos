@@ -43,6 +43,9 @@ import org.mindrot.jbcrypt.BCrypt;
 @WebServlet(name = "usuario", urlPatterns = {"/usuario"})
 public class usuario extends HttpServlet {
 
+    
+    final String nombre_proyecto = "plataforma_archivos/";
+    
     //router de los metodos
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -141,7 +144,7 @@ public class usuario extends HttpServlet {
         modelo.setClave(clave);
 
         JsonObject data = modelo.verificar_login();
-        HttpSession http = request.getSession();;
+        HttpSession http = request.getSession();
 
         switch (data.get("estado").getAsInt()) {
             case 201:
@@ -163,6 +166,8 @@ public class usuario extends HttpServlet {
                 objusuario.setImg(data.get("img").getAsString());
                 objusuario.setRol(data.get("rol").getAsString());
                 http.setAttribute("usuario", objusuario);
+                //tiempo maximo de inactividad en segundos
+                http.setMaxInactiveInterval(900);
                 response.sendRedirect("./vista/home/?action=home");
                 break;
         }
@@ -199,11 +204,11 @@ public class usuario extends HttpServlet {
         //rutas a utilizar
         String url = request.getRequestURL().toString();
         String BASE_URL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
-        String nombre_proyecto = "plataforma_archivos/";
         String src_img_perfil = BASE_URL + "public/res/profile-user.svg";
         String dir_usuario = "appData/uploads/" + nombre + "_" + paterno + "_" + materno + "/";
         //getServletContext().getRealPath("/").replace(nombre_proyecto, "")
-        String dir_webapps = "/usr/share/tomcat9/webapps/";
+        //"/usr/share/tomcat9/webapps/"
+        String dir_webapps = getServletContext().getRealPath("/").replace(nombre_proyecto, "");
         String uploads_usuario = dir_webapps + dir_usuario;
 
         //si el usuario no existe entonces
@@ -415,10 +420,10 @@ public class usuario extends HttpServlet {
         //rutas a utilizar
         String url = request.getRequestURL().toString();
         String BASE_URL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
-        String nombre_proyecto = "plataforma_archivos/";
         String dir_usuario = "appData/uploads/" + nombre_sesion.toUpperCase() + "_" + paterno_sesion.toUpperCase() + "_" + materno_sesion.toUpperCase() + "/";
         //getServletContext().getRealPath("/").replace(nombre_proyecto, "")
-        String dir_webapps = "/usr/share/tomcat9/webapps/";
+        //"/usr/share/tomcat9/webapps/"
+        String dir_webapps = getServletContext().getRealPath("/").replace(nombre_proyecto, "");
         String uploads_usuario = dir_webapps + dir_usuario;
         String nombre_foto_anterior = img_sesion.replace(BASE_URL.replace(nombre_proyecto, "") + dir_usuario, "");
         String ruta_foto_anterior = uploads_usuario + nombre_foto_anterior;
@@ -489,10 +494,10 @@ public class usuario extends HttpServlet {
         String paterno = getNombreyApellidos.get("paterno").getAsString();
         String materno = getNombreyApellidos.get("materno").getAsString();
 
-        String nombre_proyecto = "plataforma_archivos/";
         String dir_usuario = "appData/uploads/" + nombre + "_" + paterno + "_" + materno;
         //getServletContext().getRealPath("/").replace(nombre_proyecto, "")
-        String dir_webapps = "/usr/share/tomcat9/webapps/";
+        //"/usr/share/tomcat9/webapps/"
+        String dir_webapps = getServletContext().getRealPath("/").replace(nombre_proyecto, "");
         String uploads_usuario = dir_webapps + dir_usuario;
         JsonObject eliminar = modelo.eliminarUsuario();
 

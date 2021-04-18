@@ -1,5 +1,5 @@
 <div class="filtros-container">
-<form action="" method="POST">
+    <form action="" method="POST" id="form-buscar-home">
     <label for="palabra">Buscador</label>
     <input type="search" name="palabra" id="palabra" placeholder="...">
     <button type="submit">
@@ -10,7 +10,7 @@
     <label for="prioridad">Buscar por prioridad</label>
     <select name="prioridad" id="prioridad"> 
         <option value="normal">Normal</option>
-        <option value="urgente">urgente</option>
+        <option value="urgente">Urgente</option>
     </select>
 </div>
 <div>
@@ -18,7 +18,7 @@
     <select name="estado" id="estado" multiple=""> 
         <option value="abierta">Publicacion abierta</option>
         <option value="cerrada">Publicacion cerrada</option>
-        <option value="cerrada">Programadas</option>
+        <option value="programada">Programadas</option>
     </select>
 </div>
 <div>
@@ -27,9 +27,9 @@
 </div>
 <div>
     <label>Publicaciones</label>
-    <span>
-        <input type="radio" name="orden" value="ASC"> Viejas
-        <input type="radio" name="orden" value="DESC"> Nuevas
-    </span>
+    <select name="orden" id="orden" multiple=""> 
+        <option value="DESC">Nuevas</option>
+        <option value="ASC">Viejas</option>
+    </select>
 </div>
 </div>

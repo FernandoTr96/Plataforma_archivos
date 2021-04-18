@@ -223,7 +223,7 @@ public class _usuario {
 
         } catch (SQLException e) {
 
-            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
+            json.addProperty("estado", e.getMessage());
 
         }
 
@@ -259,8 +259,6 @@ public class _usuario {
             conexion.close();
 
         } catch (SQLException e) {
-
-            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
 
             if (e.getErrorCode() == 1062) {
                 json.addProperty("estado", 500);
@@ -353,7 +351,6 @@ public class _usuario {
 
         } catch (SQLException e) {
 
-            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
             json.addProperty("estado", e.getMessage());
         }
 
@@ -382,7 +379,6 @@ public class _usuario {
 
         } catch (SQLException e) {
 
-            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
             json.addProperty("estado", e.getMessage());
 
         }
@@ -411,7 +407,6 @@ public class _usuario {
 
         } catch (SQLException e) {
 
-            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
             json.addProperty("estado", e.getMessage());
         }
 
@@ -441,7 +436,6 @@ public class _usuario {
 
         } catch (SQLException e) {
 
-            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
             if (e.getErrorCode() == 1062) {
                 json.addProperty("estado", 500);
             } else {
@@ -519,7 +513,6 @@ public class _usuario {
 
         } catch (SQLException e) {
 
-            Logger.getLogger(_usuario.class.getName()).log(Level.SEVERE, null, e);
             json.addProperty("estado", e.getMessage());
         }
 

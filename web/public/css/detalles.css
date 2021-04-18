@@ -1,0 +1,251 @@
+.detalles{
+    grid-template-columns: 22% 1fr 22%;
+    grid-template-rows: repeat(2,auto);
+    grid-template-areas: 
+    "header header header"
+    "nav    main   main"
+    ;
+}
+
+.container-files{
+    width: 90%;
+    height: auto;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 10% 90%;
+    grid-template-areas: 
+    "titulo   titulo"
+    "archivos input"
+    ;
+}
+
+.carpeta{
+    grid-area: titulo;
+    font-size: 10px;
+    font-family: sans-serif;
+    color: #1c2833;
+}
+.carpeta h2{
+    text-transform: uppercase;
+}
+.archivos{
+    grid-area: archivos;
+}
+.archivos .lista-archivos{
+    width: 100%;
+    height: 250px;
+    overflow-y: scroll;
+    border: thin solid rgba(0,0,0,.1);
+}
+.archivos .lista-archivos .archivo{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #fff;
+    padding: .3rem;
+    border: thin solid rgba(0,0,0,.1);
+}
+.archivos .lista-archivos .archivo:hover, .archivos .lista-archivos .archivo *:hover{
+    transition: background-color 200ms;
+    background-color: #ccf8b4;
+}
+.archivos .lista-archivos .archivo img{
+    width: 15px;
+    height: 15px;
+}
+.archivos .lista-archivos .archivo span{
+    font-family: times new roman;
+}
+.archivos .lista-archivos .archivo .btnDescargarDoc{
+    color: #1453fa;
+}
+.archivos .lista-archivos .archivo .btnBorrarDoc{
+    color: #ec2f2f;
+    font-size: medium;
+}
+.formulario-docs{
+    grid-area: input;
+    padding-left: 1rem;
+}
+.formulario-docs .dropzone{
+    width: 100%;
+    height: auto;
+    background-color: lightgrey;
+    border: 1px dashed #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-color: #000;
+    opacity: .7;
+    padding: 1rem;
+}
+.dropzone-over{
+    transition: transform 200ms;
+    opacity: .9 !important;
+    animation: pulse 500ms linear infinite alternate;
+    background-color: #aff98a !important;
+}
+@keyframes pulse{
+    0%,50%{
+        transform: scale(.9);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+.formulario-docs .dropzone > *{
+    margin-bottom: .5rem;
+}
+.formulario-docs .dropzone i{
+    font-size: xx-large;
+    color: #1c2833;
+}
+.formulario-docs .dropzone p,.formulario-docs .dropzone span{
+    font-weight: bold;
+    color: #1c2833;
+    text-align: justify;
+}
+.formulario-docs .dropzone button{
+    border: none;
+    padding: .3rem;
+    border-radius: .2em;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.5);
+    cursor: pointer;
+}
+.formulario-docs .dropzone button:hover{
+    transition: background-color 200ms;
+    background-color: blue;
+}
+.progreso{
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.formulario-docs .botonera{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.formulario-docs .botonera .btnDescargarCarpeta{
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    border: none;
+    padding: .5rem;
+    background-color: #212f3c;
+    color:#fff;
+    font-weight: bold;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.4);
+    text-align: center;
+}
+.formulario-docs .botonera .btnDescargarCarpeta:hover{
+    transition: all 200ms;
+    border-radius: 1em;
+    background-color: green;
+}
+
+
+/*clases para colores de estado en la tabla  detalles*/
+.icon-alert{
+    color:#fae014 !important;
+}
+.icon-danger{
+    color: #d92519 !important;
+}
+.icon-neutral{
+    color: lightgray !important;
+}
+.icon-success{
+    color: green !important;
+}
+.dropzone-block{
+    cursor: not-allowed;
+    width: 100%;
+    height: auto;
+    background-color: lightgrey;
+    border: 1px dashed #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-color: #000;
+    opacity: .7;
+    padding: 1rem;
+    font-size: large;
+    line-height: 25px;
+    text-align: justify;
+    color: #212f3c;
+}
+
+@media only screen and (min-width: 0px)  and (max-width: 500px){ 
+    .detalles{
+        grid-template-columns: 22% 1fr 22%;
+        grid-template-rows: repeat(2,auto);
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+    .container-files > *{
+        padding: 0;
+    }
+    .container-files{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "titulo"
+        "archivos"
+        "input"
+        ;
+        gap:1rem;
+    }
+    
+    /*clase para recortar texto ubicda en global_config.css*/
+    .txt-3{
+        width: 150px;
+    }
+}
+
+@media only screen and (min-width: 501px)  and (max-width: 900px){
+    .detalles{
+        grid-template-columns: 22% 1fr 22%;
+        grid-template-rows: repeat(2,auto);
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+    
+    .container-files > *{
+        padding: 0;
+    }
+    .container-files{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "titulo"
+        "archivos"
+        "input"
+        "."
+        "."
+        ;
+        gap:1rem;
+    }
+    
+    /*clase para recortar texto ubicda en global_config.css*/
+    .txt-3{
+        width: 450px;
+    }
+}

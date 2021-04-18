@@ -148,6 +148,7 @@ export function registrar_usuario($formulario) {
             metodo: $formulario.method,
             data: datos,
             cs: (data) => {
+               
 
                 if (data.estado === 200)
                 {
@@ -158,13 +159,20 @@ export function registrar_usuario($formulario) {
                 } else if (data.estado === 400)
                 {
                     swal("Usuario no registrado", "Hubo un problema al intentar guardar el usuario !! ningun registro fue alterado", "warning");
+                    $loader.classList.add("none");
+                    
                 } else if (data.estado === 500)
                 {
                     swal("Correo duplicado", "El correo ingresado ya esta registrado, utilice otro !!", "error");
+                    $loader.classList.add("none");
+                    
                 } else if (data.estado === 600) {
                     swal("Usuario duplicado", "El nombre y apellidos ya estan registrados !! tienes una cuenta ?", "info");
+                    $loader.classList.add("none");
+                    
                 } else {
                     swal("Error", `${data.estado}`, "error");
+                    $loader.classList.add("none");
                 }
 
             },

@@ -1,0 +1,107 @@
+.accesos{
+    grid-template-columns: 22% 1fr 22%;
+    grid-template-rows: repeat(2,auto);
+    grid-template-areas: 
+    "header header header"
+    "nav    main   main"
+    ;
+}
+
+.accesos-container{
+    width: 100%;
+    height: auto;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.card-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.accesos-container .card-acceso{
+    width:  100%;
+    height: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: thin solid rgba(0,0,0,.1);
+}
+
+.accesos-container .card-acceso:hover{
+    transition: background-color 200ms;
+    background-color: #cff2bc;
+}
+
+.accesos-container .card-acceso img{
+    width: 26px;
+    height: 26px;
+}
+.accesos-container .card-acceso .titulo{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: x-small;
+    color: #212f3c;
+    text-transform: uppercase;
+}
+.accesos-container .card-acceso .fecha_alta{
+    color: lightslategray;
+    font-size: medium;
+}
+.accesos-container .descripcion{
+    background-color: #d4cfcf;
+    color: #333;
+    font-size: small;
+    padding: 1rem;
+    opacity: .7;
+}
+.hidde-desc{
+    display: none;
+    opacity: 1;
+}
+.accesos-container .card-acceso .btnDescripcion,.accesos-container .card-acceso .btnDetalles,.accesos-container .card-acceso .btnBorrarAcceso{
+    font-size: small;
+    background-color: #d4cfcf;
+    padding: .5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #000;
+}
+.accesos-container .card-acceso .btnDescripcion:hover,.accesos-container .card-acceso .btnDetalles:hover,.accesos-container .card-acceso .btnBorrarAcceso:hover{
+    transition:  all 400ms;
+    background-color: #212f3c;
+    color: #fff;
+}
+
+
+@media only screen and (min-width: 0px)  and (max-width: 500px){ 
+    .accesos{
+        grid-template-columns: 22% 1fr 22%;
+        grid-template-rows: repeat(2,auto);
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+    .accesos-container{
+        padding: 0;
+    }
+}
+
+@media only screen and (min-width: 501px)  and (max-width: 900px){
+    .accesos{
+        grid-template-columns: 22% 1fr 22%;
+        grid-template-rows: repeat(2,auto);
+        grid-template-areas: 
+        "header header header"
+        "main    main   main"
+        ;
+    }
+    .accesos-container{
+        padding: 0;
+    }
+}
