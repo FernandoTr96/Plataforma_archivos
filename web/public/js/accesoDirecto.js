@@ -84,7 +84,7 @@ export function listarAccesos(contenedor){
                                     <i class="fas fa-plus btnDescripcion" title="ver descripcion"></i>
                                     <a href="${BASE_URL}/publicaciones?action=detalles&id=${item.id_publicacion}" class="btnDetalles" title="ir a la carpeta"><i class="fas fa-link"></i></a>
                                     <i class="fas fa-trash-alt btnBorrarAcceso" title="eliminar acceso directo" data-id="${item.id}"></i>
-                                    <i class="fas fa-flag ${clase}"></i>
+                                    <i class="fas fa-flag ${clase}" title="${item.estatus}"></i>
                                 </div>
                                 <div class="descripcion hidde-desc">
                                     <p>${item.descripcion}</p>  

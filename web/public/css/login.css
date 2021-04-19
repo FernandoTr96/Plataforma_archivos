@@ -6,7 +6,7 @@ main{
     background-image: url('../res/boxes.png');
 }
 #form-login{
-    width: auto;
+    width: 40%;
     height: auto;
     display: block;
     background-color: #fff;
@@ -15,9 +15,8 @@ main{
     border-radius: .5em;
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    grid-template-rows: repeat(7,auto);
+    grid-template-rows: repeat(6,auto);
     grid-template-areas: 
-    "imagen imagen"
     "imagen imagen"
     "correo correo"
     "clave  clave"
@@ -36,7 +35,7 @@ main{
 }
 #form-login .imagen img{
     width: 100%;
-    height: auto;
+    height: 120px;
     object-fit: contain;
 }
 #form-login .input-correo{
@@ -54,10 +53,13 @@ main{
     font-size: medium;
     color: #333;
 }
-#form-login .input-correo i, .input-clave i{
+#form-login .input-correo .form-icon, .input-clave .form-icon{
     width: 10%;
     background-color: #222;
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #form-login .input-correo input, #form-login .input-clave input,.input-correo i, .input-clave i{
     padding: 1rem;
@@ -72,7 +74,7 @@ main{
     font-size: medium;
     border: none;
     width: 100%;
-    padding: .8rem;
+    padding: .7rem;
     transition: background-color 500ms;
     cursor: pointer;
 }
@@ -99,18 +101,37 @@ main{
 }
 
 
-@media (min-width: 200px) { 
-    #form-login .input-correo input, #form-login .input-clave input,.input-correo i, .input-clave i{
+@media (min-width: 200px) {
+    #form-login{
+        width: 100%;
+    }
+    #form-login .input-correo input, #form-login .input-clave input,.input-correo .form-icon, .input-clave .form-icon{
         padding: .3rem;
     }
     #form-login .btn-submit button{
-        padding: .5rem;
+        padding: 1rem;
         font-size: medium;
     }
 }
 @media (min-width: 576px) { 
-    #form-login .input-correo input, #form-login .input-clave input,.input-correo i, .input-clave i{
-        padding: 1rem;
+    
+    #form-login{
+        width: 70%;
+        height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "imagen"
+        "correo"
+        "clave"
+        "error"
+        "submit"
+        "links"
+        ;
+    }
+    
+    #form-login .input-correo input, #form-login .input-clave input,.input-correo .form-icon, .input-clave .form-icon{
+        padding: .6rem;
     }
     #form-login .btn-submit button{
         padding: 1rem;
@@ -119,8 +140,24 @@ main{
 }
 
 @media (min-width: 768px){ 
-    #form-login .input-correo input, #form-login .input-clave input,.input-correo i, .input-clave i{
-        padding: 1rem;
+    
+    #form-login{
+        width: auto;
+        height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "imagen"
+        "correo"
+        "clave"
+        "error"
+        "submit"
+        "links"
+        ;
+    }
+    
+    #form-login .input-correo input, #form-login .input-clave input,.input-correo .form-icon, .input-clave .form-icon{
+        padding: .5rem;
     }
     #form-login .btn-submit button{
         padding: 1rem;

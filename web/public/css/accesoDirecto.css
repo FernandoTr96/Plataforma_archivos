@@ -34,7 +34,7 @@
 
 .accesos-container .card-acceso:hover{
     transition: background-color 200ms;
-    background-color: #cff2bc;
+    background-color:  #f8f9f9 ;
 }
 
 .accesos-container .card-acceso img{
@@ -63,7 +63,7 @@
     display: none;
     opacity: 1;
 }
-.accesos-container .card-acceso .btnDescripcion,.accesos-container .card-acceso .btnDetalles,.accesos-container .card-acceso .btnBorrarAcceso{
+.accesos-container .card-acceso .btnDescripcion, .accesos-container .card-acceso .btnDetalles,.accesos-container .card-acceso .btnBorrarAcceso{
     font-size: small;
     background-color: #d4cfcf;
     padding: .5rem;

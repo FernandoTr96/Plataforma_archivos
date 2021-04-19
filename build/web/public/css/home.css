@@ -255,7 +255,6 @@
 .card .card-body p{
     width: 100%;
     height: auto;
-    text-transform: capitalize;
     text-align: justify;
 }
 .cortar_texto{
